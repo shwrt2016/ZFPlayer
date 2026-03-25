@@ -96,88 +96,94 @@
     CGFloat min_h = 0;
     CGFloat min_view_w = self.bounds.size.width;
     CGFloat min_view_h = self.bounds.size.height;
-    
-    CGFloat min_margin = 9; 
-    
+
+    CGFloat min_margin = 9;
+
+    UIEdgeInsets safeInsets = UIEdgeInsetsZero;
+    if (@available(iOS 11.0, *)) {
+        safeInsets = self.safeAreaInsets;
+    }
+    BOOL isLandscape = UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation);
+    CGFloat safeLeft = MAX(safeInsets.left, 15);
+    CGFloat safeRight = MAX(safeInsets.right, min_margin);
+    CGFloat safeTop = safeInsets.top;
+    CGFloat safeBottom = safeInsets.bottom;
+
     min_x = 0;
     min_y = 0;
     min_w = min_view_w;
-    min_h = iPhoneX ? 110 : 80;
+    min_h = safeTop + 60;
     self.topToolView.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
+
     min_x = 0;
     min_y = 0;
     min_w = min_view_w;
     min_h = 20;
     self.statusBarView.frame = CGRectMake(min_x, min_y, min_w, min_h);
 
-    min_x = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: 15;
-    if (@available(iOS 13.0, *)) {
-        if (self.showCustomStatusBar) {
-            min_y = self.statusBarView.zf_bottom;
-        } else {
-            min_y = UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation) ? 10 : (iPhoneX ? 40 : 20);
-        }
+    min_x = safeLeft;
+    if (self.showCustomStatusBar) {
+        min_y = self.statusBarView.zf_bottom;
     } else {
-        min_y = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 10: (iPhoneX ? 40 : 20);
+        min_y = isLandscape ? (safeTop > 0 ? safeTop : 10) : (safeTop > 0 ? safeTop : 20);
     }
     min_w = 40;
     min_h = 40;
     self.backBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
+
     min_x = self.backBtn.zf_right + 5;
     min_y = 0;
-    min_w = min_view_w - min_x - 15 ;
+    min_w = min_view_w - min_x - 15;
     min_h = 30;
     self.titleLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
     self.titleLabel.zf_centerY = self.backBtn.zf_centerY;
-    
-    min_h = iPhoneX ? 100 : 73;
+
+    min_h = safeBottom + 73;
     min_x = 0;
     min_y = min_view_h - min_h;
     min_w = min_view_w;
     self.bottomToolView.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
-    min_x = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: 15;
+
+    min_x = safeLeft;
     min_y = 32;
     min_w = 30;
     min_h = 30;
     self.playOrPauseBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
-    
+
     min_x = self.playOrPauseBtn.zf_right + 4;
     min_y = 0;
     min_w = 62;
     min_h = 30;
     self.currentTimeLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
     self.currentTimeLabel.zf_centerY = self.playOrPauseBtn.zf_centerY;
-    
+
     min_w = 62;
-    min_x = self.bottomToolView.zf_width - min_w - ((iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 44: min_margin);
+    min_x = self.bottomToolView.zf_width - min_w - safeRight;
     min_y = 0;
     min_h = 30;
     self.totalTimeLabel.frame = CGRectMake(min_x, min_y, min_w, min_h);
     self.totalTimeLabel.zf_centerY = self.playOrPauseBtn.zf_centerY;
-    
+
     min_x = self.currentTimeLabel.zf_right + 4;
     min_y = 0;
     min_w = self.totalTimeLabel.zf_left - min_x - 4;
     min_h = 30;
     self.slider.frame = CGRectMake(min_x, min_y, min_w, min_h);
     self.slider.zf_centerY = self.playOrPauseBtn.zf_centerY;
-    
-    min_x = (iPhoneX && UIInterfaceOrientationIsLandscape([UIApplication sharedApplication].statusBarOrientation)) ? 50: 18;
+
+    min_x = safeLeft + 3;
     min_y = 0;
     min_w = 40;
     min_h = 40;
     self.lockBtn.frame = CGRectMake(min_x, min_y, min_w, min_h);
     self.lockBtn.zf_centerY = self.zf_centerY;
-    
+
     if (!self.isShow) {
         self.topToolView.zf_y = -self.topToolView.zf_height;
         self.bottomToolView.zf_y = self.zf_height;
         self.lockBtn.zf_left = iPhoneX ? -82: -47;
     } else {
-        self.lockBtn.zf_left = iPhoneX ? 50: 18;
+        self.lockBtn.zf_left = safeLeft + 3;
         if (self.player.isLockedScreen) {
             self.topToolView.zf_y = -self.topToolView.zf_height;
             self.bottomToolView.zf_y = self.zf_height;

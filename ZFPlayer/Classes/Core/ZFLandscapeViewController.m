@@ -49,14 +49,6 @@
     return UIInterfaceOrientationMaskAllButUpsideDown;
 }
 
-- (void)viewSafeAreaInsetsDidChange {
-    [super viewSafeAreaInsetsDidChange];
-    UIEdgeInsets safeArea = self.view.safeAreaInsets;
-    if (!UIEdgeInsetsEqualToEdgeInsets(safeArea, UIEdgeInsetsZero)) {
-        self.additionalSafeAreaInsets = UIEdgeInsetsMake(-safeArea.top, -safeArea.left, -safeArea.bottom, -safeArea.right);
-    }
-}
-
 - (BOOL)prefersHomeIndicatorAutoHidden {
     return YES;
 }

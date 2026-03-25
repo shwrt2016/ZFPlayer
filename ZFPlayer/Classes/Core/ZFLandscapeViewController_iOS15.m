@@ -33,19 +33,6 @@
     [self.view addSubview:_playerSuperview];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    self.playerSuperview.frame = self.view.bounds;
-}
-
-- (void)viewSafeAreaInsetsDidChange {
-    [super viewSafeAreaInsetsDidChange];
-    UIEdgeInsets safeArea = self.view.safeAreaInsets;
-    if (!UIEdgeInsetsEqualToEdgeInsets(safeArea, UIEdgeInsetsZero)) {
-        self.additionalSafeAreaInsets = UIEdgeInsetsMake(-safeArea.top, -safeArea.left, -safeArea.bottom, -safeArea.right);
-    }
-}
-
 - (BOOL)shouldAutorotate {
     return [self.delegate ls_shouldAutorotate];
 }
