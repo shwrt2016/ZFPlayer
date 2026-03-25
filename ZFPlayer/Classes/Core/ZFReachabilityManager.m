@@ -25,7 +25,7 @@
 #import "ZFReachabilityManager.h"
 #if !TARGET_OS_WATCH
 #import <netinet/in.h>
-#import <netinet6/in6.h>
+// netinet/in.h 已包含 IPv6 定义，移除私有头文件以兼容 Xcode 16+
 #import <arpa/inet.h>
 #import <ifaddrs.h>
 #import <netdb.h>
