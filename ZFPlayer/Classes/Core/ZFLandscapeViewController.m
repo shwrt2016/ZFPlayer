@@ -52,7 +52,9 @@
 - (void)viewSafeAreaInsetsDidChange {
     [super viewSafeAreaInsetsDidChange];
     UIEdgeInsets safeArea = self.view.safeAreaInsets;
-    self.additionalSafeAreaInsets = UIEdgeInsetsMake(-safeArea.top, -safeArea.left, -safeArea.bottom, -safeArea.right);
+    if (!UIEdgeInsetsEqualToEdgeInsets(safeArea, UIEdgeInsetsZero)) {
+        self.additionalSafeAreaInsets = UIEdgeInsetsMake(-safeArea.top, -safeArea.left, -safeArea.bottom, -safeArea.right);
+    }
 }
 
 - (BOOL)prefersHomeIndicatorAutoHidden {
